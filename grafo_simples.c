@@ -6,6 +6,7 @@
 */
 struct _vertex {
     int value;
+    int grau;
     struct _vertex *next;
 };
 typedef struct _vertex Vertex;
@@ -32,6 +33,7 @@ Vertex *insertVertex(Vertex *head, int value){
     Vertex *new = malloc (sizeof(Vertex));
     new->value = value;
     new->next = head;
+    new->grau = 0;
 
     return new;
 }
@@ -40,11 +42,14 @@ Edge *insertEdge(Graph *graph, int v_origem, int v_destino) {
 
     Edge *newA = malloc(sizeof(Edge));
     Vertex *auxV;
+    //auxV->grau = 0;
     for (auxV = graph->vertexes; auxV!=NULL; auxV=auxV->next) {
         if (auxV->value == v_origem) {
+            auxV->grau ++;
             newA->s = auxV;
         }
         if (auxV->value == v_destino) {
+            auxV->grau ++;
             newA->d = auxV;
         }
         newA->next = graph->edges;
@@ -58,7 +63,7 @@ void printGraphNotOriented(Graph *graph){
     Edge *auxE;
     printf("\n********* Vertexes ************\n");
     for (auxV = graph->vertexes; auxV!=NULL; auxV=auxV->next) 
-       printf("\t %d ,\n", auxV->value);
+       printf("\t %d --- (%d) \n", auxV->value, auxV->grau);
     
     printf("\n\n********* Edges ************\n");
     if (graph->edges == NULL){
@@ -119,7 +124,7 @@ Graph *newGraph(){
 int main(){
 
     Graph *g1 = newGraph();
-
+    
     g1->vertexes = insertVertex(g1->vertexes, 1);
     g1->vertexes = insertVertex(g1->vertexes, 2);
     g1->vertexes = insertVertex(g1->vertexes, 3);
@@ -129,9 +134,6 @@ int main(){
     g1->edges = insertEdge(g1, 5, 1);
     g1->edges = insertEdge(g1, 4, 2);
     g1->edges = insertEdge(g1, 3, 1);
-
-    //insertEdge(g1, 5, 1);
-    //insertEdge(g1, 4, 2);
 
     printGraphNotOriented(g1);
 
