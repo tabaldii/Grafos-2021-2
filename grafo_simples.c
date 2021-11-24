@@ -28,28 +28,46 @@ typedef struct {
 } Graph;
 
 Vertex *insertVertex(Vertex *head, int value){
+
     Vertex *new = malloc (sizeof(Vertex));
     new->value = value;
-
     new->next = head;
 
     return new;
 }
 
+Edge *insertEdge(Graph *graph, int v_origem, int v_destino) {
+
+    Edge *newA = malloc(sizeof(Edge));
+    Vertex *auxV;
+    for (auxV = graph->vertexes; auxV!=NULL; auxV=auxV->next) {
+        if (auxV->value == v_origem) {
+            newA->s = auxV;
+        }
+        if (auxV->value == v_destino) {
+            newA->d = auxV;
+        }
+        newA->next = graph->edges;
+    }
+    return newA;
+}
+
 //Exemplo de print
-void printGraphNotOriented( Graph *graph){
+void printGraphNotOriented(Graph *graph){
     Vertex *auxV;
     Edge *auxE;
     printf("\n********* Vertexes ************\n");
     for (auxV = graph->vertexes; auxV!=NULL; auxV=auxV->next) 
-       printf("\t %d s(%d) e(%d),\n", auxV->value, auxE->s, auxE->d);
+       printf("\t %d ,\n", auxV->value);
     
     printf("\n\n********* Edges ************\n");
-    if (graph->edges == NULL)
-      printf("No edges!");
-    else
+    if (graph->edges == NULL){
+        printf("No edges!");
+    }
+    else {
         for (auxE = graph->edges; auxE!=NULL; auxE=auxE->next) 
             printf("\t (%d, %d)", auxE->s->value, auxE->d->value);
+    }
     printf("\n");
 }
 
@@ -75,14 +93,7 @@ void printGraphOriented( Graph *graph){
     printf("\n");
 }
 
-Edge *insertEdge(Vertex *vertex, int v_origem, int v_destino){
 
-    //Edge *new = malloc(sizeof(Edge));
-    
-    graph->edges->s = v_origem;
-    graph->edges->d = v_destino;
-    return ;
-}
     // Buescar a Origem e o Destino na lista de Vértices. 
        //Devem ser os mesmo que estão na lista de vértices, não podem ser criados.
 
@@ -115,7 +126,12 @@ int main(){
     g1->vertexes = insertVertex(g1->vertexes, 4);
     g1->vertexes = insertVertex(g1->vertexes, 5); 
 
-    g1->edges = insertEdge(g1->vertexes, 5, 1); 
+    g1->edges = insertEdge(g1, 5, 1);
+    g1->edges = insertEdge(g1, 4, 2);
+    g1->edges = insertEdge(g1, 3, 1);
+
+    //insertEdge(g1, 5, 1);
+    //insertEdge(g1, 4, 2);
 
     printGraphNotOriented(g1);
 
