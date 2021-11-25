@@ -1,20 +1,15 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-/*
- Vertex linked list
-*/
+
 struct _vertex {
     int value;
-    int entry_grade;
-    int output_degree;
+    int entry_grade; // Guardar o grau de entrada do vétice (usei o tradutor kkk)
+    int output_degree; // Guardar o grau de saída do vétice (usei o tradutor kkk)
     struct _vertex *next;
 };
 typedef struct _vertex Vertex;
 
-/*
- Edge linked list
-*/
 
 struct _edge {
     Vertex *s;
@@ -29,13 +24,15 @@ typedef struct {
     Edge *edges; //primeiro elemento da lista de arestas
 } Graph;
 
-Vertex *insertVertex(Vertex *head, int value){
+Vertex *insertVertex(Vertex *head, int value) {
 
     Vertex *new = malloc (sizeof(Vertex));
+
     new->value = value;
     new->next = head;
     new->entry_grade = 0;
     new->output_degree = 0;
+
     return new;
 }
 
@@ -63,9 +60,10 @@ void printGraphNotOriented(Graph *graph) {
 
     Vertex *auxV;
     Edge *auxE;
+
     printf("\n********* Vertexes ************\n");
     for (auxV = graph->vertexes; auxV!=NULL; auxV=auxV->next) {
-       printf("\t %d --- (%d) \n", auxV->value, (auxV->entry_grade + auxV->output_degree));
+       printf("\t %d --- grau(%d) \n", auxV->value, (auxV->entry_grade + auxV->output_degree));
     }
     printf("\n\n********* Edges ************\n");
     if (graph->edges == NULL) {
@@ -87,7 +85,7 @@ void printGraphOriented( Graph *graph) {
 
     printf("\n********* Vertexes ************\n");
     for (auxV = graph->vertexes; auxV!=NULL; auxV=auxV->next) {
-        printf("\t %d s(%d) d(%d),\n", auxV->value, auxV->output_degree, auxV->entry_grade);
+        printf("\t %d ---  saida(%d) entrada(%d)\n", auxV->value, auxV->output_degree, auxV->entry_grade);
     }
     printf("\n\n********* Edges ************\n");
     if (graph->edges == NULL) {
@@ -114,18 +112,6 @@ void printGraphOriented( Graph *graph) {
     printf("\n");
 }
 
-
-    // Buescar a Origem e o Destino na lista de Vértices. 
-       //Devem ser os mesmo que estão na lista de vértices, não podem ser criados.
-
-//Não orientado:
-// -- Listar todos os vertices com os respectivos graus.
-
-//Grafo orientado:
-// -- Listar os graus de entrada e saida para cada um dos vértices.
-// -- Listar todos os vértices que são sumidouro
-// -- Listar todos os vértices que são fonte
-
 Graph *newGraph(){
     Graph *new = malloc (sizeof(Graph));
     
@@ -138,10 +124,11 @@ Graph *newGraph(){
 int main(){
 
     Graph *g1 = newGraph();
-
+    printf("--------------\n");
     printf("O grafo eh orientado? \n 1 - sim\n 0 - nao\n");
+    printf("-> ");
     scanf("%d", &g1->oriented);
-    printf("----\n");
+    printf("--------------\n");
     
     g1->vertexes = insertVertex(g1->vertexes, 1);
     g1->vertexes = insertVertex(g1->vertexes, 2);
