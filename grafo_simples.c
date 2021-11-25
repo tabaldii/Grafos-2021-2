@@ -1,5 +1,9 @@
-#include<stdio.h>
-#include<stdlib.h>
+
+// Anderson Henrique Grosselli Tabaldi
+// Matricula: 2011100008
+
+#include <stdio.h>
+#include <stdlib.h>
 
 
 struct _vertex {
@@ -112,12 +116,14 @@ void printGraphOriented( Graph *graph) {
     printf("\n");
 }
 
-Graph *newGraph(){
+Graph *newGraph() {
+
     Graph *new = malloc (sizeof(Graph));
     
     new->oriented = 0;
     new->edges = NULL;
     new->vertexes = NULL;
+
     return new;
 }
 
