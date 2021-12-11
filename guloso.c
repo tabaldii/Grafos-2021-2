@@ -7,32 +7,29 @@
 
 #define TAM 7
 
-int achaMenor(int array[TAM][TAM],int inicio,int objetivo) {
+int achaMenor(int array[TAM][TAM],int inicio) {
 
-    int i, j = 0;
+    int i, j;
     int menor = 50000000;
     int posMenor = 0;
 
     for (i = inicio; i == inicio; i++) {
         
-        printf("Estou no nodo %d, ", i);
+        printf("Estou no nodo %d, ", i+1);
 
-        for (j = 0; j < TAM; j++) {
+        for (j = 1; j < TAM; j++) {
 
             if (array[i][j] != 0) {
-                if (array[i][j] < menor) {
+                if (array[i][j] < menor){
                     menor = array[i][j];
                     posMenor = j;
                 }
             }
-            else {
-                if (j == TAM){
-                    printf("Impossivel com guloso!\n");
-                    return 0;
-                }
+            else if (menor == 50000000 && j == TAM){
+                return 0;
             }
         }
-        printf("indo para o nodo %d por %d\n", posMenor, menor);
+        printf("indo para o nodo %d por %d\n", posMenor+1, menor);
         return(posMenor);
     }
 }
@@ -42,7 +39,7 @@ void guloso(int array[TAM][TAM], int inicio, int objetivo) {
 
     int novoInicio, i = 0;
 
-    novoInicio = achaMenor(array, inicio, objetivo);
+    novoInicio = achaMenor(array, inicio);
     if (novoInicio == 0) {
         printf("Impossivel com guloso!\n");
         return;
@@ -54,6 +51,7 @@ void guloso(int array[TAM][TAM], int inicio, int objetivo) {
     else if(novoInicio == objetivo){
         return;
     }
+    printf("posicao do novo inicio: %d\n", novoInicio);
     guloso(array, novoInicio,objetivo);
     i++;
 }
@@ -85,7 +83,7 @@ int main() {
 
     };
 
-    guloso(matriz, inicio, objetivo);
+    guloso(matriz, inicio-1, objetivo-1);
 
     return 0;
 }
