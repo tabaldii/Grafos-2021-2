@@ -26,7 +26,7 @@ int achaMenor(int array[TAM][TAM],int inicio) {
                 }
             }
             else if (menor == 50000000 && j == TAM){
-                return 0;
+                return 0; 
             }
         }
         printf("indo para o nodo %d por %d\n", posMenor+1, menor);
@@ -51,7 +51,6 @@ void guloso(int array[TAM][TAM], int inicio, int objetivo) {
     else if(novoInicio == objetivo){
         return;
     }
-    printf("posicao do novo inicio: %d\n", novoInicio);
     guloso(array, novoInicio,objetivo);
     i++;
 }
