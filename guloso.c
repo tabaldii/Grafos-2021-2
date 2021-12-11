@@ -5,57 +5,61 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define TAM 5
+#define TAM 7
 
 
-void guloso(int array[TAM][TAM]) {
+void guloso(int array[TAM][TAM], int inicio, int objetivo) {
 
-    int i, j, k, grauEntrada = 0, grauSaida = 0;
-    printf("\n    ");
+    int i, j = 0;
+    int passos = 0;
+    int menor = 50000000;
+    int posMenor = 0;
 
-    for (k = 0; k < TAM; k++) {
-        printf("%d ", k + 1);
+    for (i = inicio; i != objetivo; i++) {
+        
+        printf("Estou no nodo %d, ", i);
+
+        if (passos == TAM){
+            printf("Cansei, impossivel fazer com guloso!\n");
+        }
+
+        for (j = 0; j < TAM; j++) {
+
+            if (array[i][j] != 0) {
+                if (array[i][j] < menor) {
+                    menor = array[i][j];
+                    posMenor = j;
+                }
+            }
+            else {
+                if (j == TAM){
+                    printf("Impossivel com guloso!\n");
+                    break;
+                }
+            }
+        }
+        printf("indo para o nodo %d por %d\n", posMenor, menor);
+        inicio = posMenor;
+        passos ++;
     }
-    
-    printf("\n");
-    for (k = 0; k < TAM; k++) {
-        printf("---");
-    }
-
-    printf("\n");
+    /*
     for (i = 0; i < TAM; i++) { 
-
-        printf("%d | ", i + 1);
 
         for (j = 0; j < TAM; j++) {
 
             printf("%d ", array[i][j]);
 
             if (array[i][j] == 1) {
-                grauSaida += 1;
+                
             }
 
             if (array[j][i] == 1) {
-                grauEntrada += 1;
+                
             }
         }
+    }*/
 
-        printf("| Saida(%d)", grauSaida);
-        printf(" - Entrada(%d)", grauEntrada);
-
-        if (grauSaida == 0) {
-            printf(" - Eh sumidouro");
-        }
-
-        if (grauEntrada == 0) {
-            printf(" - Eh fonte");
-        }
-
-        printf("\n");
-        grauSaida = 0;
-        grauEntrada = 0;
-
-    }
+    
 }
 
 int main() {
@@ -74,15 +78,18 @@ int main() {
 
     int matriz [TAM][TAM] = {
 
-        { 0, 1, 1, 0, 1},
-        { 0, 0, 1, 1, 0},
-        { 0, 0, 0, 1, 0},
-        { 0, 0, 1, 0, 1},
-        { 0, 0, 0, 0, 0}
+          //1  2  3  4  5  6  7
+    /*1*/ { 0, 2, 0, 6, 12, 0, 0},
+    /*2*/ { 0, 0, 1, 0, 0, 5, 0},
+    /*3*/ { 0, 0, 0, 0, 0, 0, 40},
+    /*4*/ { 0, 0, 0, 0, 0, 4, 0},
+    /*5*/ { 0, 0, 0, 0, 0, 0, 30},
+    /*6*/ { 0, 0, 0, 0, 0, 0, 8},
+    /*7*/ { 0, 0, 0, 0, 0, 0, 0}
+
     };
 
-
-    guloso(matriz);
+    guloso(matriz, inicio, objetivo);
 
     return 0;
 }
