@@ -10,8 +10,10 @@
 int achaMenor(int array[TAM][TAM],int inicio) {
 
     int i, j;
-    int menor = 50000000;
-    int posMenor = 0;
+    int valor[TAM];
+    int visitados[TAM];
+    int anterior[TAM];
+    
 
     for (i = inicio; i == inicio; i++) {
         
@@ -35,8 +37,9 @@ int achaMenor(int array[TAM][TAM],int inicio) {
 }
 
 
-void guloso(int array[TAM][TAM], int inicio, int objetivo) {
+void dijkstra(int array[TAM][TAM], int inicio) {
 
+    for 
     int novoInicio, i = 0;
     novoInicio = achaMenor(array, inicio);
     if (novoInicio == 0) {
@@ -47,41 +50,37 @@ void guloso(int array[TAM][TAM], int inicio, int objetivo) {
         printf("Cansei, impossivel com guloso!\n");
         return;
     }
-    else if(novoInicio == objetivo){
-        return;
-    }
-    guloso(array, novoInicio,objetivo);
+   
+    dijkstra(array, novoInicio);
     i++;
 }
 
 int main() {
 
-    int inicio, objetivo;
+    int inicio;
 
     printf("--------------\n");
     printf("Defina o inicio\n");
     printf("-> ");
     scanf("%d", &inicio);
     printf("\n");
-    printf("Defina o objetivo\n");
-    printf("-> ");
-    scanf("%d", &objetivo);   
     printf("--------------\n");
 
     int matriz [TAM][TAM] = {
 
-          //1  2  3  4  5  6  7
-    /*1*/ { 0, 2, 0, 6, 12, 0, 0},
-    /*2*/ { 0, 0, 1, 0, 0, 5, 0},
-    /*3*/ { 0, 0, 0, 0, 0, 0, 40},
-    /*4*/ { 0, 0, 0, 0, 0, 4, 0},
-    /*5*/ { 0, 0, 0, 0, 0, 0, 30},
-    /*6*/ { 0, 0, 0, 0, 0, 0, 8},
-    /*7*/ { 0, 0, 0, 0, 0, 0, 0}
+          //0  1  2  3  4  5  6  7
+    /*0*/ { 0, 5, 0, 0, 5, 0, 0, 0},
+    /*1*/ { 0, 0, 8, 2, 0, 3, 3, 0},
+    /*2*/ { 0, 0, 0, 0, 0, 0, 0, 0},
+    /*3*/ { 0, 0, 0, 0, 0, 0, 0, 6},
+    /*4*/ { 0, 0, 0, 0, 0, 0, 1, 4},
+    /*5*/ { 0, 0, 0, 2, 0, 0, 0, 5},
+    /*6*/ { 0, 0, 2, 0, 0, 7, 0, 6},
+    /*7*/ { 0, 0, 0, 0, 0, 0, 0, 0}
 
     };
 
-    guloso(matriz, inicio-1, objetivo-1);
+    dijkstra(matriz, inicio);
 
     return 0;
 }
