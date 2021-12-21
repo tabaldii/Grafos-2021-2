@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 #define TAM 7
-
+/*
 int achaMenor(int array[TAM][TAM],int inicio) {
 
     int i, j;
@@ -35,11 +35,50 @@ int achaMenor(int array[TAM][TAM],int inicio) {
         return(posMenor);
     }
 }
+*/
+void printDijkstra(int valor[TAM][TAM], int atual, int anterior[TAM], int visitados[TAM]){
 
+    printf("\tvertice\t|\tvisitados\t|\tvalor\t|\tanterior\t|\n");
+
+    for(int i = 0; i < TAM; i++) {
+        printf("\t%d\t|\t%d\t|\t%d\t|\t%d\t|", i, visitados[i], valor[atual][i], anterior[i]);
+        printf("\n");
+    }
+}
 
 void dijkstra(int array[TAM][TAM], int inicio) {
 
-    for 
+    int valor[TAM][TAM], anterior[TAM], visitado[TAM], distancia[TAM];
+    int i, j;
+
+    for (i = 0; i < TAM; i++) {
+
+        anterior[i] = -1;
+        visitado[i] = 0;
+
+        for (j = 0; j < TAM; j++){
+            if (array[i][j] == 0){
+                valor[i][j] = 0; 
+            }
+            else {
+                valor[i][j] = array[i][j];
+            }
+        }
+    }
+    valor[inicio][0] = 0;
+    visitado[inicio] = 1;
+
+    j = inicio;
+    printDijkstra(valor, inicio, anterior, visitado);
+    /*
+    while (j < TAM) {
+        printf("Visitando -> %d", j);
+
+
+    }
+    
+
+
     int novoInicio, i = 0;
     novoInicio = achaMenor(array, inicio);
     if (novoInicio == 0) {
@@ -52,7 +91,7 @@ void dijkstra(int array[TAM][TAM], int inicio) {
     }
    
     dijkstra(array, novoInicio);
-    i++;
+    i++;*/
 }
 
 int main() {
@@ -69,14 +108,14 @@ int main() {
     int matriz [TAM][TAM] = {
 
           //0  1  2  3  4  5  6  7
-    /*0*/ { 0, 5, 0, 0, 5, 0, 0, 0},
-    /*1*/ { 0, 0, 8, 2, 0, 3, 3, 0},
-    /*2*/ { 0, 0, 0, 0, 0, 0, 0, 0},
-    /*3*/ { 0, 0, 0, 0, 0, 0, 0, 6},
-    /*4*/ { 0, 0, 0, 0, 0, 0, 1, 4},
-    /*5*/ { 0, 0, 0, 2, 0, 0, 0, 5},
-    /*6*/ { 0, 0, 2, 0, 0, 7, 0, 6},
-    /*7*/ { 0, 0, 0, 0, 0, 0, 0, 0}
+    /*0*/ { 0, 4, 7, 4, 0, 0, 0, 0},
+    /*1*/ { 0, 0, 0, 0, 0, 0, 0, 0},
+    /*2*/ { 0, 2, 0, 0, 0, 0, 0, 0},
+    /*3*/ { 0, 0, 0, 0, 0, 0, 0, 9},
+    /*4*/ { 0, 0, 9, 0, 0, 0, 0, 0},
+    /*5*/ { 0, 1, 0, 8, 0, 0, 0, 0},
+    /*6*/ { 0, 0, 6, 0, 0, 0, 0, 9},
+    /*7*/ { 0, 0, 0, 0, 0, 3, 0, 0}
 
     };
 
