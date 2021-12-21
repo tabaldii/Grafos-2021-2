@@ -4,11 +4,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <limits.h>
 
 #define TAM 8
 
-void printDijkstra(int valor[TAM], int anterior[TAM], int visitados[TAM]){
+void showDijkstra(int valor[TAM], int anterior[TAM], int visitados[TAM]){
 
     printf("     vertice    |    visitados  |     valor     |   anterior    |\n");
 
@@ -16,6 +15,7 @@ void printDijkstra(int valor[TAM], int anterior[TAM], int visitados[TAM]){
         printf("\t%d\t|\t%d\t|\t%d\t|\t%d\t|", i, visitados[i], valor[i], anterior[i]);
         printf("\n");
     }
+    printf("\n");
 }
 
 int achaMenor(int distancia[TAM], int visitados[TAM]) {
@@ -23,6 +23,7 @@ int achaMenor(int distancia[TAM], int visitados[TAM]) {
     int menor = 100;
     int i;
     int posMenor;
+
     for (i = 0; i < TAM; i++) {
         if (visitados[i] == 0 && distancia[i] < menor) {
             menor = distancia[i];
@@ -46,7 +47,10 @@ void dijkstra(int array[TAM][TAM], int inicio, int visitado[TAM], int anterior[T
     while (j < TAM) {
 
         visitado[j] = 1;
+        printf("\n");
         printf("Visitando -> %d\n", j);
+        printf("--------------\n");
+
         for(int i = 0; i < TAM; i++){
             if(array[j][i] != 0 && visitado[i] != 1 && (array[j][i] + distancia[j]) < distancia[i]){
                 distancia[i] = array[j][i] + distancia[j];
@@ -54,22 +58,19 @@ void dijkstra(int array[TAM][TAM], int inicio, int visitado[TAM], int anterior[T
             }
         }
 
-        printDijkstra(distancia, anterior, visitado);
+        showDijkstra(distancia, anterior, visitado);
         
-        int menor = achaMenor(distancia, visitado);
+        j = achaMenor(distancia, visitado);
         
-        if (menor == -1 || menor > TAM){
+        if (j == -1 || j > TAM){
             return;
         }
-        j = menor;
     }
 }
 
 int main() {
 
     int inicio;
-    int anterior[TAM], visitado[TAM], distancia[TAM];
-
     printf("--------------\n");
     printf("Defina o inicio\n");
     printf("-> ");
@@ -91,9 +92,9 @@ int main() {
 
     };
 
-    int i;
+    int anterior[TAM], visitado[TAM], distancia[TAM];
 
-    for (i = 0; i < TAM; i++) {
+    for (int i = 0; i < TAM; i++) {
         anterior[i] = -1;
         visitado[i] = 0;
         distancia[i] = 100;
