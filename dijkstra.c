@@ -4,39 +4,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 #define TAM 8
-/*
-int achaMenor(int array[TAM][TAM],int inicio) {
 
-    int i, j;
-    int valor[TAM];
-    int visitados[TAM];
-    int anterior[TAM];
-    
-
-    for (i = inicio; i == inicio; i++) {
-        
-        printf("Estou no nodo %d, ", i+1);
-
-        for (j = 1; j < TAM; j++) {
-
-            if (array[i][j] != 0) {
-                if (array[i][j] < menor){
-                    menor = array[i][j];
-                    posMenor = j;
-                }
-            }
-            else if (menor == 50000000 && j == TAM){
-                return 0; 
-            }
-        }
-        printf("indo para o nodo %d por %d\n", posMenor+1, menor);
-        return(posMenor);
-    }
-}
-*/
-void printDijkstra(int valor[TAM], int atual, int anterior[TAM], int visitados[TAM]){
+void printDijkstra(int valor[TAM], int anterior[TAM], int visitados[TAM]){
 
     printf("     vertice    |    visitados  |     valor     |   anterior    |\n");
 
@@ -46,36 +18,51 @@ void printDijkstra(int valor[TAM], int atual, int anterior[TAM], int visitados[T
     }
 }
 
+int achaMenor(int distancia[TAM], int visitados[TAM]) {
+
+    int menor = 100;
+    int i;
+    int posMenor;
+    for (i = 0; i < TAM; i++) {
+        if (visitados[i] == 0 && distancia[i] < menor) {
+            menor = distancia[i];
+            posMenor = i;
+        }
+    }
+
+    if (menor == 100){
+        return -1;
+    }
+    return posMenor;
+}
+
+
+
 void dijkstra(int array[TAM][TAM], int inicio, int visitado[TAM], int anterior[TAM], int distancia[TAM]) {
 
-    visitado[inicio] = 1;
     distancia[inicio] = 0;
-
-    int j = inicio, i;
+    int j = inicio;
 
     while (j < TAM) {
+
+        visitado[j] = 1;
         printf("Visitando -> %d\n", j);
-        printDijkstra(distancia, inicio, anterior, visitado);
+        for(int i = 0; i < TAM; i++){
+            if(array[j][i] != 0 && visitado[i] != 1 && (array[j][i] + distancia[j]) < distancia[i]){
+                distancia[i] = array[j][i] + distancia[j];
+                anterior[i] = j;
+            }
+        }
+
+        printDijkstra(distancia, anterior, visitado);
         
-        j++;
+        int menor = achaMenor(distancia, visitado);
+        
+        if (menor == -1 || menor > TAM){
+            return;
+        }
+        j = menor;
     }
-
-    
-/*
-
-    int novoInicio, i = 0;
-    novoInicio = achaMenor(array, inicio);
-    if (novoInicio == 0) {
-        printf("Impossivel com guloso!\n");
-        return;
-    }
-    else if (i == TAM){
-        printf("Cansei, impossivel com guloso!\n");
-        return;
-    }
-   
-    dijkstra(array, novoInicio);
-    i++;*/
 }
 
 int main() {
@@ -104,14 +91,12 @@ int main() {
 
     };
 
-    int i, j;
+    int i;
 
     for (i = 0; i < TAM; i++) {
-
         anterior[i] = -1;
         visitado[i] = 0;
         distancia[i] = 100;
-
     }
 
     dijkstra(matriz, inicio, visitado, anterior, distancia);
