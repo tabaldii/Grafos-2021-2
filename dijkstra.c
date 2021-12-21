@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define TAM 7
+#define TAM 8
 /*
 int achaMenor(int array[TAM][TAM],int inicio) {
 
@@ -36,48 +36,32 @@ int achaMenor(int array[TAM][TAM],int inicio) {
     }
 }
 */
-void printDijkstra(int valor[TAM][TAM], int atual, int anterior[TAM], int visitados[TAM]){
+void printDijkstra(int valor[TAM], int atual, int anterior[TAM], int visitados[TAM]){
 
-    printf("\tvertice\t|\tvisitados\t|\tvalor\t|\tanterior\t|\n");
+    printf("     vertice    |    visitados  |     valor     |   anterior    |\n");
 
     for(int i = 0; i < TAM; i++) {
-        printf("\t%d\t|\t%d\t|\t%d\t|\t%d\t|", i, visitados[i], valor[atual][i], anterior[i]);
+        printf("\t%d\t|\t%d\t|\t%d\t|\t%d\t|", i, visitados[i], valor[i], anterior[i]);
         printf("\n");
     }
 }
 
-void dijkstra(int array[TAM][TAM], int inicio) {
+void dijkstra(int array[TAM][TAM], int inicio, int visitado[TAM], int anterior[TAM], int distancia[TAM]) {
 
-    int valor[TAM][TAM], anterior[TAM], visitado[TAM], distancia[TAM];
-    int i, j;
-
-    for (i = 0; i < TAM; i++) {
-
-        anterior[i] = -1;
-        visitado[i] = 0;
-
-        for (j = 0; j < TAM; j++){
-            if (array[i][j] == 0){
-                valor[i][j] = 0; 
-            }
-            else {
-                valor[i][j] = array[i][j];
-            }
-        }
-    }
-    valor[inicio][0] = 0;
     visitado[inicio] = 1;
+    distancia[inicio] = 0;
 
-    j = inicio;
-    printDijkstra(valor, inicio, anterior, visitado);
-    /*
+    int j = inicio, i;
+
     while (j < TAM) {
-        printf("Visitando -> %d", j);
-
-
+        printf("Visitando -> %d\n", j);
+        printDijkstra(distancia, inicio, anterior, visitado);
+        
+        j++;
     }
-    
 
+    
+/*
 
     int novoInicio, i = 0;
     novoInicio = achaMenor(array, inicio);
@@ -97,6 +81,7 @@ void dijkstra(int array[TAM][TAM], int inicio) {
 int main() {
 
     int inicio;
+    int anterior[TAM], visitado[TAM], distancia[TAM];
 
     printf("--------------\n");
     printf("Defina o inicio\n");
@@ -119,7 +104,17 @@ int main() {
 
     };
 
-    dijkstra(matriz, inicio);
+    int i, j;
+
+    for (i = 0; i < TAM; i++) {
+
+        anterior[i] = -1;
+        visitado[i] = 0;
+        distancia[i] = 100;
+
+    }
+
+    dijkstra(matriz, inicio, visitado, anterior, distancia);
 
     return 0;
 }
