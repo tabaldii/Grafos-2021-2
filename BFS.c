@@ -12,56 +12,75 @@ struct Fila {
 
     int topo;
     int fim;
-    struct Fila *prev;
+    struct Fila *next;
 
 };
 
-typedef struct Fila fila;
+typedef struct Fila queue;
 
 
+queue adicionaFila (int elemento, queue addFila) {
+
+    addFila.next->topo = elemento;
+    return addFila;
+
+} 
 
 void showBFS (int variaveis[TAM][3], int matriz[TAM][TAM]) {
     
 
 }
 
+void showFila(queue fila) {
+    while (fila.topo != NULL) {
+        printf("Fila -> ");
+        printf("%d -- ", fila.topo);
+        fila.topo = fila.next;        
+    }
+}
 
-void BFS(int inicio, int matriz[TAM][TAM], int fila[TAM],  int anterior[TAM], int visitado[TAM], int distancia[TAM]) {
+
+void BFS(int inicio, int matriz[TAM][TAM], queue fila,  int anterior[TAM], int visitado[TAM], int distancia[TAM]) {
 
     int i, j;
-    fila[0] = inicio;
+    
+    fila.topo = inicio;
+    fila.next = NULL;
 
-    while (fila[0] == 0) {
+    while (fila.topo != NULL) {
 
+        for (i = inicio; i < TAM; i++) {
 
-    }
+            if (visitado[i] != 1) {
 
-    for (i = inicio; i < TAM; i++) {
-
-        if (variaveis[i][1] != 1) {
-            variaveis[i][1] = 1;
-            adicionaFila(i)
-        }
-        else {
-            return;
-        }
-
-        printf("Visitando -> %d\n", i);
-        printf("------------\n");
-        printf("     vertice    |    visitado  |     valor de caminho    |   anterior    |\n");
-
-        for(int i = 0; i < TAM; i++) {
-            printf("\t%d\t|\t%d\t|\t%d\t|\t%d\t|", i, variaveis[i][1], variaveis[i][2], variaveis[i][0]);
-            printf("\n");
-        }
-
-        for (j = 0; j < TAM; j++) {
-                if (matriz[i][j] != 0) {
-                    
+                visitado[i] = 1;
+                if (i != inicio) {
+                    fila = adicionaFila(i, fila);
                 }
+            }
+
+            else {
+                return;
+            }
+
+            printf("Visitando -> %d\n", i);
+            printf("------------\n");
+            printf("     vertice    |    visitado  |     valor de caminho    |   anterior    |\n");
+
+            for(int i = 0; i < TAM; i++) {
+                printf("\t%d\t|\t%d\t|\t%d\t|\t%d\t|", i, visitado[i], distancia[i], anterior[i]);
+                printf("\n");
+            }
+            showFila(fila);
+            /*
+            for (j = 0; j < TAM; j++) {
+                    if (matriz[i][j] != 0) {
+                        
+                    }
+            }
+            */
         }
     }
-
 }
 
 int main() {
@@ -96,7 +115,7 @@ int main() {
         distancia[i] = 100;
     }
 
-    Fila fila;
+    queue fila;
     
     BFS(inicio, matriz, fila, anterior, visitado, distancia);
 
