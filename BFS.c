@@ -2,52 +2,65 @@
 // Anderson Henrique Grosselli Tabaldi
 // Matricula: 2011100008
 
-
 #include <stdio.h>
 #include <stdlib.h>
 
 #define TAM 8
 
-struct Fila {
+struct dado {
+    int elemento;
+    struct dado *next;
+};
+typedef struct dado Dado;
 
-    int topo;
-    int fim;
-    struct Fila *next;
+typedef struct ponteiros {
+    Dado *primeiro;
+    Dado *ultimo;
+} Fila;
 
+
+Fila incluiEle(Fila fila, int newDado) {
+    Dado *novo;
+    novo = (Dado *)malloc(sizeof(Dado));
+    novo->elemento = newDado;
+    novo->next = NULL;
+    if (fila.primeiro == NULL) {
+        fila.ultimo = novo;
+        fila.primeiro = novo;
+    }
+    else {
+        fila.ultimo->next = novo;
+        fila.ultimo = novo;
+    }
+    return fila;
+}
+
+Fila removeEle(Fila fila) {
+
+    Dado *aux; 
+    aux = fila.primeiro->next;
+    free(fila.primeiro);
+    fila.primeiro = aux;
+
+    return fila;
 };
 
-typedef struct Fila queue;
+void showFila(Fila fila) {
 
-
-queue adicionaFila (int elemento, queue addFila) {
-
-    addFila.next->topo = elemento;
-    return addFila;
-
-} 
-
-void showBFS (int variaveis[TAM][3], int matriz[TAM][TAM]) {
-    
-
-}
-
-void showFila(queue fila) {
-    while (fila.topo != NULL) {
-        printf("Fila -> ");
-        printf("%d -- ", fila.topo);
-        fila.topo = fila.next;        
+    Dado *aux = fila.primeiro;
+    printf("Fila -> ");
+    while (aux->next != NULL) {
+        printf("%d, ", aux->elemento);
     }
+    
 }
 
-
-void BFS(int inicio, int matriz[TAM][TAM], queue fila,  int anterior[TAM], int visitado[TAM], int distancia[TAM]) {
+void BFS(int inicio, int matriz[TAM][TAM], Fila fila,  int anterior[TAM], int visitado[TAM], int distancia[TAM]) {
 
     int i, j;
-    
-    fila.topo = inicio;
-    fila.next = NULL;
+    fila = incluiEle(fila, inicio);
 
-    while (fila.topo != NULL) {
+    while (fila.primeiro->next != NULL) {
 
         for (i = inicio; i < TAM; i++) {
 
@@ -55,7 +68,7 @@ void BFS(int inicio, int matriz[TAM][TAM], queue fila,  int anterior[TAM], int v
 
                 visitado[i] = 1;
                 if (i != inicio) {
-                    fila = adicionaFila(i, fila);
+                    fila = incluiEle(fila, i);
                 }
             }
 
@@ -107,16 +120,16 @@ int main() {
     };
 
 
-    int anterior[TAM], visitado[TAM], distancia[TAM];
+    int anterior[TAM], visitado[TAM], distancia[TAM], fila[TAM+1];
     
     for (int i = 0; i < TAM; i++) {
         anterior[i] = -1;
         visitado[i] = 0;
         distancia[i] = 100;
     }
-
-    queue fila;
     
+    Fila fila;
+
     BFS(inicio, matriz, fila, anterior, visitado, distancia);
 
 
